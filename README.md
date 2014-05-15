@@ -15,13 +15,13 @@ This is a [Java (JDK Required)](http://www.oracle.com/technetwork/java/javase/do
 ### How To Use
 
 ##### Regular Icons
-<img src="https://raw.githubusercontent.com/roysix/font-awesome-to-image/master/Regular%20Icons.png" alt="Regular Icons" width="30%"/>
+<img src="https://raw.githubusercontent.com/roysix/font-awesome-to-image/master/Regular%20Icons.png" alt="Regular Icons" width="50%"/>
 * Run `java FontAwesome [size] [color] [format]`
 * Example `java FontAwesome 48 0 png`
 * *Generate 48px black png icon images*
 
 ##### Stacked Icons
-<img src="https://raw.githubusercontent.com/roysix/font-awesome-to-image/master/Stacked%20Icons.png" alt="Stacked Icons" width="30%"/>
+<img src="https://raw.githubusercontent.com/roysix/font-awesome-to-image/master/Stacked%20Icons.png" alt="Stacked Icons" width="50%"/>
 * Run `java FontAwesome [size] [color] [format] [sicon] [ssize] [scolor]`
 * Example `java FontAwesome 24 ffffff png square 48 0`
 * *Generate images that have a 24px white icon stacked on top of a 48px black square*
