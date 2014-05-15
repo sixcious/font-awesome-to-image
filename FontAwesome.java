@@ -72,7 +72,7 @@ public class FontAwesome {
      * @param args command line arguments
      */
     public static void validateArgs(final String[] args) {
-        if ((args.length != 3 && args.length != 6)) {
+        if (args.length != 3 && args.length != 6) {
             System.out.print("\n\tFor regular icons, please enter 3 arguments:\n");
             System.out.print("\tjava FontAwesome [size] [color] [format]\n");
             System.out.print("\tex: \"java FontAwesome 48 0 png\"\n\n");
@@ -109,10 +109,10 @@ public class FontAwesome {
         final Map<String, Character> icons = new HashMap<>(1000);
         try {
             final List<String> lines = Files.readAllLines(Paths.get("css/font-awesome.css"), StandardCharsets.UTF_8);
-            final Pattern pvalue = Pattern.compile("(?<=\\\\).*(?=\")");   // (?<=\).*(?=")
-            final Pattern pkey = Pattern.compile("(?<=.fa-).*(?=:before)"); // (?<=.fa-).*(?=\:before)
-            for (int i = 0; i < lines.size(); i++) {
-                if (lines.get(i).contains("content: \"\\f")) { // Check each line if it has a unicode value
+            final Pattern pvalue = Pattern.compile("(?<=\\\\).*(?=\")"); // (?<=\).*(?=")
+            final Pattern pkey = Pattern.compile("(?<=.fa-).*(?=:before)"); // (?<=.fa-).*(?=:before)
+            for (int i = 0; i < lines.size(); i++) { // Check each line if it has a unicode value
+                if (lines.get(i).contains("content: \"\\f")) {
                     final Matcher mvalue = pvalue.matcher(lines.get(i));
                     if (mvalue.find()) {
                         final Character value = toUnicode(mvalue.group());
