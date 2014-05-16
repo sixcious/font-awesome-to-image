@@ -9,8 +9,8 @@ This is a [Java](http://www.oracle.com/technetwork/java/javase/downloads/index.h
 <img src="https://raw.githubusercontent.com/roysix/font-awesome-to-image/master/Set%20Up.png" alt="" width="50%"/>
 
 1. Download [Font Awesome](http://fortawesome.github.io/Font-Awesome) and unzip it
-2. Place [`FontAwesome.java`](https://raw.githubusercontent.com/roysix/font-awesome-to-image/master/FontAwesome.java) in the `font-awesome-x.x.x` folder that has the `css` and `fonts` sub-folders
-3. Open up a command prompt or terminal shell, navigate to the `font-awesome-x.x.x` folder and run the command `javac FontAwesome.java` to compile
+2. Place [`FontAwesome.java`](https://raw.githubusercontent.com/roysix/font-awesome-to-image/master/FontAwesome.java) in the `font-awesome-x.x.x` folder
+3. Open up a command prompt or terminal shell and run the command `javac FontAwesome.java` to compile
 
 ### How To Use
 
