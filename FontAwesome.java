@@ -30,9 +30,9 @@ import java.util.regex.Pattern;
  * <p/>
  * Arguments are expected in two formats.
  * <p/>
- * Regular Icon (3 Arguments): [size] [color] [format]
+ * Regular Icon (4 Arguments): [size] [color] [padding] [format]
  * <br/>
- * Stacked Icon (6 Arguments): [size] [color] [format] [sicon] [ssize] [scolor]
+ * Stacked Icon (7 Arguments): [size] [color] [padding] [format] [sicon] [ssize] [scolor]
  * <p/>
  * Examples: <code>java FontAwesome 48 0 png</code> or <code>java FontAwesome 32 ffffff png square 64 0</code>
  * <p/>
@@ -43,7 +43,7 @@ import java.util.regex.Pattern;
  */
 public class FontAwesome {
 
-    int size; Font ffont; float fsize; Color fcolor; Font sfont; float ssize; Color scolor; String sicon; String format;
+    int size; float padding; Font ffont; float fsize; Color fcolor; Font sfont; float ssize; Color scolor; String sicon; String format;
 
     /**
      * Main method.
@@ -72,13 +72,13 @@ public class FontAwesome {
      * @param args command line arguments
      */
     public static void validateArgs(final String[] args) {
-        if (args.length != 3 && args.length != 6) {
-            System.out.print("\n\tFor regular icons, please enter 3 arguments:\n");
-            System.out.print("\tjava FontAwesome [size] [color] [format]\n");
-            System.out.print("\tex: \"java FontAwesome 48 0 png\"\n\n");
-            System.out.print("\tFor stacked icons, please enter 6 arguments:\n");
-            System.out.print("\tjava FontAwesome [size] [color] [format] [sicon] [ssize] [scolor]\n");
-            System.out.print("\tex: \"java FontAwesome 32 ffffff png square 64 0\"\n");
+        if (args.length != 4 && args.length != 7) {
+            System.out.print("\n\tFor regular icons, please enter 4 arguments:\n");
+            System.out.print("\tjava FontAwesome [size] [color] [padding] [format]\n");
+            System.out.print("\tex: \"java FontAwesome 48 0 1/8 png\"\n\n");
+            System.out.print("\tFor stacked icons, please enter 7 arguments:\n");
+            System.out.print("\tjava FontAwesome [size] [color] [padding] [format] [sicon] [ssize] [scolor]\n");
+            System.out.print("\tex: \"java FontAwesome 32 ffffff 1/8 png square 64 0\"\n");
             System.exit(0);
         }
     }
@@ -136,7 +136,7 @@ public class FontAwesome {
 
     /**
      * Initializes the {@link FontAwesome} properties via the provided program arguments. See {@link #main(String[])}
-     * for the expected arguments format.
+     * for the expected arguments format. Note: the font sizes are reduced by 1/8th for some padding.
      *
      * @param font  Font Awesome {@link Font}
      * @param icons Font Awesome Icon {@link Map}
@@ -147,13 +147,14 @@ public class FontAwesome {
         final FontAwesome properties = new FontAwesome();
         properties.fsize = args.length > 0 ? Integer.parseInt(args[0]) : 48;
         properties.fcolor = args.length > 1 ? new Color(Integer.parseInt(args[1], 16)) : new Color(0);
-        properties.format = args.length > 2 ? args[2] : "png";
-        properties.sicon = args.length > 3 ? icons.get(args[3]).toString() : null;
-        properties.ssize = args.length > 4 ? Integer.parseInt(args[4]) : 0;
-        properties.scolor = args.length > 5 ? new Color(Integer.parseInt(args[5], 16)) : null;
+        properties.padding = args.length > 2 && args[2].contains("/") ? Float.parseFloat(args[2].split("/")[0]) / Float.parseFloat(args[2].split("/")[1]) : 0;
+        properties.format = args.length > 3 ? args[3] : "png";
+        properties.sicon = args.length > 4 ? icons.get(args[4]).toString() : null;
+        properties.ssize = args.length > 5 ? Integer.parseInt(args[5]) : 0;
+        properties.scolor = args.length > 6 ? new Color(Integer.parseInt(args[6], 16)) : null;
         properties.size = properties.fsize > properties.ssize ? (int) properties.fsize : (int) properties.ssize;
-        properties.ffont = font.deriveFont(properties.fsize);
-        properties.sfont = properties.sicon != null ? font.deriveFont(properties.ssize) : null;
+        properties.ffont = font.deriveFont(properties.fsize - properties.fsize * properties.padding);
+        properties.sfont = properties.sicon != null ? font.deriveFont(properties.ssize - properties.ssize * properties.padding) : null;
         return properties;
     }
 
