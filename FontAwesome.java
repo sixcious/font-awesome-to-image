@@ -34,7 +34,7 @@ import java.util.regex.Pattern;
  * <br/>
  * Stacked Icon (7 Arguments): [size] [color] [padding] [format] [sicon] [ssize] [scolor]
  * <p/>
- * Examples: <code>java FontAwesome 48 0 png</code> or <code>java FontAwesome 32 ffffff png square 64 0</code>
+ * Examples: <code>java FontAwesome 48 0 1/8 png</code> or <code>java FontAwesome 32 ffffff 0 png square 64 0</code>
  * <p/>
  * Note: the colors should be entered in hex format like <code>ff69b4</code> (pink) or <code>0</code> (black)
  *
