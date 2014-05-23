@@ -112,17 +112,15 @@ public class FontAwesome {
             final Pattern pvalue = Pattern.compile("(?<=\\\\).*(?=\")"); // (?<=\).*(?=")
             final Pattern pkey = Pattern.compile("(?<=.fa-).*(?=:before)"); // (?<=.fa-).*(?=:before)
             for (int i = 0; i < lines.size(); i++) { // Check each line if it has a unicode value
-                if (lines.get(i).contains("content: \"\\f")) {
-                    final Matcher mvalue = pvalue.matcher(lines.get(i));
-                    if (mvalue.find()) {
-                        final Character value = toUnicode(mvalue.group());
-                        for (int j = i - 1; j >= 0; j--) { // Check previous lines for the keys to this unicode value
-                            final Matcher mkey = pkey.matcher(lines.get(j));
-                            if (mkey.find()) {
-                                icons.put(mkey.group(), value);
-                            } else {
-                                break;
-                            }
+                final Matcher mvalue = pvalue.matcher(lines.get(i));
+                if (mvalue.find()) {
+                    final Character value = toUnicode(mvalue.group());
+                    for (int j = i - 1; j >= 0; j--) { // Check previous lines for the keys to this unicode value
+                        final Matcher mkey = pkey.matcher(lines.get(j));
+                        if (mkey.find()) {
+                            icons.put(mkey.group(), value);
+                        } else {
+                            break;
                         }
                     }
                 }
