@@ -19,7 +19,7 @@ This is a [Java](http://www.oracle.com/technetwork/java/javase/downloads/index.h
 
 * Run `java FontAwesome [size] [color] [padding] [format]`
 * Example `java FontAwesome 48 0 1/8 png`
-* *Generates 48px black png icon images with a padding of 6px (48 * 1/8 = 6)*
+* *Generates 48px black png icon images with a padding of 1/8 the size (48 * 1/8 = 6px)*
 
 ##### Stacked Icons
 <img src="https://raw.githubusercontent.com/roysix/font-awesome-to-image/master/Stacked%20Icons.png" alt="Stacked Icons" width="50%"/>
