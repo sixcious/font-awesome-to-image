@@ -191,7 +191,7 @@ public class FontAwesome {
         final BufferedImage image = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
         final Graphics2D graphics = image.createGraphics();
         graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON); // AA
-        if (sfont != null) { // Then draw stacked icon first
+        if (sicon != null) { // Then draw stacked icon first
             graphics.setFont(sfont);
             graphics.setColor(scolor);
             final Point spoint = calcDrawPoint(sfont, sicon, size, graphics);
