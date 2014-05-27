@@ -28,10 +28,13 @@ This is a [Java](http://www.oracle.com/technetwork/java/javase/downloads/index.h
 * Example `java FontAwesome 24 ffffff 0 png square 48 0`
 * *Generates images that have a 24px white icon stacked on top of a 48px black square with no padding*
 
-> *Tip: Use bigger image sizes for better quality when stacking icons
+> #### Tips!
+> *Use bigger image sizes for better quality when stacking icons
 <br/>
-Please enter colors in hex format like `ff69b4` (pink) or `0` (black)
+Enter colors in [hex triplet](http://en.wikipedia.org/wiki/Web_colors#Hex_triplet) format like `ff69b4` (pink) or `0` (black)
 <br/>
 Enter padding as a fraction of the image size like `1/16` or `0` for none (`1/8` recommended)
+<br/>
+Add more padding if a particularly wide or tall icon is not able to fit in the desired image size
 <br/>
 Images will be saved in a newly made `images` folder*
