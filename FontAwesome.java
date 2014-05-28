@@ -28,15 +28,7 @@ import java.util.regex.Pattern;
 /**
  * <code>FontAwesome</code> converts Font Awesome icons to image files, such as in PNG or GIF format.
  * <p/>
- * Arguments are expected in two formats.
- * <p/>
- * Regular Icon (4 Arguments): [size] [color] [padding] [format]
- * <br/>
- * Stacked Icon (7 Arguments): [size] [color] [padding] [format] [sicon] [ssize] [scolor]
- * <p/>
- * Examples: <code>java FontAwesome 48 0 1/8 png</code> or <code>java FontAwesome 24 ffffff 0 png square 48 0</code>
- * <p/>
- * Note: the colors should be entered in hex format like <code>ff69b4</code> (pink) or <code>0</code> (black)
+ * For usage and examples, see the accompanying README.MD file.
  *
  * @author  Roy Six
  * @version 1.0
@@ -133,8 +125,7 @@ public class FontAwesome {
     }
 
     /**
-     * Initializes the {@link FontAwesome} properties via the provided program arguments. See {@link #main(String[])}
-     * for the expected arguments format. Note: the font sizes are reduced by 1/8th for some padding.
+     * Initializes the {@link FontAwesome} properties via the provided program arguments.
      *
      * @param font  Font Awesome {@link Font}
      * @param icons Font Awesome Icon {@link Map}
