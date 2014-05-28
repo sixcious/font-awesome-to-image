@@ -5,7 +5,7 @@ Generates Font Awesome icon images
 
 <img src="https://raw.githubusercontent.com/roysix/font-awesome-to-image/master/screenshots/program-intro.png" alt="Program Intro" width="75%"/>
 
-This is a [Java](http://www.oracle.com/technetwork/java/javase/downloads/index.html) command-line program that generates image files (like png or gif) using the insanely *awesome* [Font Awesome](http://fortawesome.github.io/Font-Awesome) icon library.
+This is a [Java](http://www.oracle.com/technetwork/java/javase/downloads/index.html) command-line program that generates high quality image files (like png or gif) using the insanely *awesome* [Font Awesome](http://fortawesome.github.io/Font-Awesome) icon library.
 
 ### Set Up
 <img src="https://raw.githubusercontent.com/roysix/font-awesome-to-image/master/screenshots/setup.png" alt="Set Up" width="50%"/>
