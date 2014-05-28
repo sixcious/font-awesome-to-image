@@ -3,10 +3,12 @@ font-awesome-to-image
 
 Generates Font Awesome icon images
 
+<img src="https://raw.githubusercontent.com/roysix/font-awesome-to-image/master/screenshots/program-intro.png" alt="Program Intro" width="75%"/>
+
 This is a [Java](http://www.oracle.com/technetwork/java/javase/downloads/index.html) command-line program that generates image files (like png or gif) using the insanely *awesome* [Font Awesome](http://fortawesome.github.io/Font-Awesome) icon library.
 
 ### Set Up
-<img src="https://raw.githubusercontent.com/roysix/font-awesome-to-image/master/Set%20Up.png" alt="" width="50%"/>
+<img src="https://raw.githubusercontent.com/roysix/font-awesome-to-image/master/screenshots/set-up.png" alt="" width="50%"/>
 
 1. Download [Font Awesome](http://fortawesome.github.io/Font-Awesome) and unzip it
 2. Place [`FontAwesome.java`](https://raw.githubusercontent.com/roysix/font-awesome-to-image/master/FontAwesome.java) in the `font-awesome-x.x.x` folder
@@ -15,14 +17,14 @@ This is a [Java](http://www.oracle.com/technetwork/java/javase/downloads/index.h
 ### How To Use
 
 ##### Regular Icons
-<img src="https://raw.githubusercontent.com/roysix/font-awesome-to-image/master/Regular%20Icons.png" alt="Regular Icons" width="50%"/>
+<img src="https://raw.githubusercontent.com/roysix/font-awesome-to-image/master/screenshots/regular-icons.png" alt="Regular Icons" width="50%"/>
 
 * Run `java FontAwesome [size] [color] [padding] [format]`
 * Example `java FontAwesome 48 0 1/8 png`
 * *Generates 48px black png icon images with a padding of 1/8 the size (48 * 1/8 = 6px)*
 
 ##### Stacked Icons
-<img src="https://raw.githubusercontent.com/roysix/font-awesome-to-image/master/Stacked%20Icons.png" alt="Stacked Icons" width="50%"/>
+<img src="https://raw.githubusercontent.com/roysix/font-awesome-to-image/master/screenshots/stacked-icons.png" alt="Stacked Icons" width="50%"/>
 
 * Run `java FontAwesome [size] [color] [padding] [format] [sicon] [ssize] [scolor]`
 * Example `java FontAwesome 24 ffffff 0 png square 48 0`
