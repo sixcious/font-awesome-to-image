@@ -8,7 +8,7 @@ Generates Font Awesome icon images
 This is a [Java](http://www.oracle.com/technetwork/java/javase/downloads/index.html) command-line program that generates image files (like png or gif) using the insanely *awesome* [Font Awesome](http://fortawesome.github.io/Font-Awesome) icon library.
 
 ### Set Up
-<img src="https://raw.githubusercontent.com/roysix/font-awesome-to-image/master/screenshots/set-up.png" alt="" width="50%"/>
+<img src="https://raw.githubusercontent.com/roysix/font-awesome-to-image/master/screenshots/setup.png" alt="Set Up" width="50%"/>
 
 1. Download [Font Awesome](http://fortawesome.github.io/Font-Awesome) and unzip it
 2. Place [`FontAwesome.java`](https://raw.githubusercontent.com/roysix/font-awesome-to-image/master/FontAwesome.java) in the `font-awesome-x.x.x` folder
