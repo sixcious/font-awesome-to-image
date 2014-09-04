@@ -5,12 +5,12 @@ Generates Font Awesome icon images
 
 <img src="https://raw.githubusercontent.com/roysix/font-awesome-to-image/master/screenshots/program-intro.png" alt="Program Intro" width="75%"/>
 
-This is a [Java](http://www.oracle.com/technetwork/java/javase/downloads/index.html) command-line program that generates high quality image files (like png or gif) using the insanely *awesome* [Font Awesome](http://fortawesome.github.io/Font-Awesome) icon library.
+This is a [Java](http://www.oracle.com/technetwork/java/javase/downloads/index.html) command-line program that generates high quality image files (like png or gif) using the insanely *awesome* [Font Awesome](http://fontawesome.io) icon library.
 
 ### Set Up
 <img src="https://raw.githubusercontent.com/roysix/font-awesome-to-image/master/screenshots/setup.png" alt="Set Up" width="50%"/>
 
-1. Download [Font Awesome](http://fortawesome.github.io/Font-Awesome) and unzip it
+1. Download [Font Awesome](http://fontawesome.io) and unzip it
 2. Place [`FontAwesome.java`](https://raw.githubusercontent.com/roysix/font-awesome-to-image/master/FontAwesome.java) in the `font-awesome-x.x.x` folder
 3. Open up a command prompt or terminal shell and run the command `javac FontAwesome.java` to compile
 
