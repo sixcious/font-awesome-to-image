@@ -64,7 +64,7 @@ public class FontAwesome {
      * @param args the command line arguments
      */
     private static void validateArgs(String[] args) {
-        if (args.length != 4 || args.length != 7) {
+        if (args.length != 4 && args.length != 7) {
             System.out.print("\n\tFor regular icons, please enter 4 arguments:\n");
             System.out.print("\tjava FontAwesome [size] [color] [padding] [format]\n");
             System.out.print("\tex: \"java FontAwesome 48 0 1/8 png\"\n\n");
