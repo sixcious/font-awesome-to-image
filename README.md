@@ -1,7 +1,7 @@
 font-awesome-to-image
 =====================
 
-Generates Font Awesome icon images. Tested to work with the latest Font Awesome release, Version 4.4.0.
+Generates Font Awesome icon images. Tested to work with the latest Font Awesome release, Version 4.5.0.
 
 <img src="https://raw.githubusercontent.com/roysix/font-awesome-to-image/master/screenshots/program-intro.png" alt="Program Intro" width="75%"/>
 
