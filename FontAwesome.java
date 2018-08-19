@@ -1,8 +1,3 @@
-/*
- * Copyright (c) 2014 Roy Six
- * Font Awesome by Dave Gandy - https://fontawesome.com
- */
-
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 
 import java.awt.AlphaComposite;
@@ -30,12 +25,14 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
 /**
- * {@code FontAwesome} converts Font Awesome icons to PNG image files.
+ * {@code FontAwesome} converts Font Awesome 5 Free icons to PNG image files.
  * <p/>
  * For usage and examples, see the accompanying README.MD file.
+ * <p/>
+ * Font Awesome is by Dave Gandy - https://fontawesome.com
  *
  * @author  Roy Six
- * @version 1.0
+ * @version 5.2.0
  */
 public class FontAwesome {
 
@@ -45,17 +42,18 @@ public class FontAwesome {
     private static final String SOLID_FONT_PATH = "otfs/Font Awesome 5 Free-Solid-900.otf";
 
     private static class Properties {
+        // Front variables:
         List<String> icons;
         List<String> styles;
         int size;
+        Color color;
         float padding;
-        //    private static Font ffont;
-        float fsize;
-        Color fcolor; // Front variables
-        Font sfont;
+        // Stacked variables:
+        String sicon;
+        String sstyle;
         float ssize;
         Color scolor;
-        String sicon;  // Stacked variables
+        // Transparent variables:
         boolean transparent;
         Color bgcolor;
     }
@@ -122,8 +120,8 @@ public class FontAwesome {
         properties.icons = Arrays.asList(args[0].split(","));
         properties.styles = Arrays.asList(args[1].split(","));
 //        properties.ficons = args.length > 0 ? Arrays.asList(args[0].split(",")) : null;
-        properties.fsize = args.length > 2 ? Integer.parseInt(args[2]) : 48;
-        properties.fcolor = args.length > 3 ? "transparent".equals(args[3]) ? new Color(0x0000000, true) : new Color(Integer.parseInt(args[3], 16)) : new Color(0);
+        properties.size = args.length > 2 ? Integer.parseInt(args[2]) : 48;
+        properties.color = args.length > 3 ? "transparent".equals(args[3]) ? new Color(0x0000000, true) : new Color(Integer.parseInt(args[3], 16)) : new Color(0);
         properties.transparent = args.length > 3 && "transparent".equals(args[3]);
         properties.padding = args.length > 4 && args[4].contains("/") ? Float.parseFloat(args[4].split("/")[0]) / Float.parseFloat(args[4].split("/")[1]) : 0;
         // properties.padding = args.length > 4 ? Float.parseFloat(args[4]) : 0;
@@ -132,7 +130,7 @@ public class FontAwesome {
         properties.sicon = null;
         properties.ssize = args.length > 6 ? Integer.parseInt(args[6]) : 0;
         properties.scolor = args.length > 7 ? new Color(Integer.parseInt(args[7], 16)) : null;
-        properties.size = properties.fsize > properties.ssize ? (int) properties.fsize : (int) properties.ssize;
+        properties.size = properties.size > properties.ssize ? (int) properties.size : (int) properties.ssize;
 //        properties.ffont = font.deriveFont(properties.fsize - properties.fsize * properties.padding);
 //        properties.sfont = properties.sicon != null ? font.deriveFont(properties.ssize - properties.ssize * properties.padding) : null;
         return properties;
@@ -152,7 +150,7 @@ public class FontAwesome {
         paths.put("solid", SOLID_FONT_PATH);
         for (Map.Entry<String, String> path : paths.entrySet()) {
             try (FileInputStream fis = new FileInputStream(path.getValue())) {
-                Font font = Font.createFont(Font.TRUETYPE_FONT, fis).deriveFont(properties.size + (properties.padding * properties.size));
+                Font font = Font.createFont(Font.TRUETYPE_FONT, fis).deriveFont(properties.size - (properties.padding * properties.size));
                 fonts.put(path.getKey(), font);
             } catch (IOException | FontFormatException e) {
                 System.err.print(e.getMessage() + "\n");
@@ -216,7 +214,7 @@ public class FontAwesome {
         }
         for (Icon icon : icons) {
             for (String style : icon.styles) {
-                BufferedImage image = buildImage(properties.size, properties.sfont, properties.sicon, properties.scolor, fonts.get(style), icon.unicode.toString(), properties.fcolor, properties.transparent, properties.bgcolor);
+                BufferedImage image = buildImage(properties.size, fonts.get(properties.sstyle), properties.sicon, properties.scolor, fonts.get(style), icon.unicode.toString(), properties.color, properties.transparent, properties.bgcolor);
                 saveImage(image, "images/" + style + "/" + icon.name, "png");
             }
         }

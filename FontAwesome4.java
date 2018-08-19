@@ -3,7 +3,8 @@
  * Font Awesome by Dave Gandy - http://fontawesome.io
  */
 
-import java.awt.AlphaComposite;
+import javax.imageio.ImageIO;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
@@ -18,28 +19,23 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.imageio.ImageIO;
 
 /**
- * {@code FontAwesome} converts Font Awesome icons to image files, such as in PNG or GIF format.
+ * {@code FontAwesome4} converts Font Awesome 4 icons to image files, such as in PNG or GIF format.
  * <p/>
  * For usage and examples, see the accompanying README.MD file.
  *
  * @author  Roy Six
- * @version 1.0
+ * @version 4.7.0
  */
-public class FontAwesome {
+public class FontAwesome4 {
 
-    int size; float padding; String format;               //
-    Font ffont; float fsize; Color fcolor; // Front variables
-    Font sfont; float ssize; Color scolor; String sicon;  // Stacked variables
-    boolean transparent; Color bgcolor;                   // Transparent variables
+    int size; float padding; Font ffont; float fsize; Color fcolor; Font sfont; float ssize; Color scolor; String sicon; String format;
 
     /**
      * Main method.
@@ -52,10 +48,10 @@ public class FontAwesome {
         Font font = initFont();
         System.out.print("Done!\n");
         System.out.format("%30s", "Initializing icons... ");
-        Map<String, Character> icons = initIcons(args[0]);
+        Map<String, Character> icons = initIcons();
         System.out.print("Done!\n");
         System.out.format("%30s", "Initializing properties... ");
-        FontAwesome properties = initProperties(font, icons, args);
+        FontAwesome4 properties = initProperties(font, icons, args);
         System.out.print("Done!\n");
         System.out.format("%30s", "Saving " + icons.size() + " images... ");
         buildAndSaveImages(icons, properties);
@@ -68,16 +64,13 @@ public class FontAwesome {
      * @param args the command line arguments
      */
     private static void validateArgs(String[] args) {
-        if (args.length != 5 && args.length != 6 && args.length != 8) {
-            System.out.print("\n\tFor regular icons, please enter 5 arguments:\n");
-            System.out.print("\tjava FontAwesome [icons] [size] [color] [padding] [format]\n");
-            System.out.print("\tex: \"java FontAwesome all 48 000000 1/8 png\"\n\n");
-            System.out.print("\tFor transparent icons, please enter 6 arguments:\n");
-            System.out.print("\tjava FontAwesome [icons] [size] transparent [padding] [format] [bgcolor]\n");
-            System.out.print("\tex: \"java FontAwesome plus-circle,minus-circle 48 transparent 1/8 png 000000\"\n\n");
-            System.out.print("\tFor stacked icons, please enter 8 arguments:\n");
-            System.out.print("\tjava FontAwesome [icons] [size] [color] [padding] [format] [sicon] [ssize] [scolor]\n");
-            System.out.print("\tex: \"java FontAwesome all 24 ffffff 0 png square 48 000000\"\n");
+        if (args.length != 4 && args.length != 7) {
+            System.out.print("\n\tFor regular icons, please enter 4 arguments:\n");
+            System.out.print("\tjava FontAwesome [size] [color] [padding] [format]\n");
+            System.out.print("\tex: \"java FontAwesome 48 0 1/8 png\"\n\n");
+            System.out.print("\tFor stacked icons, please enter 7 arguments:\n");
+            System.out.print("\tjava FontAwesome [size] [color] [padding] [format] [sicon] [ssize] [scolor]\n");
+            System.out.print("\tex: \"java FontAwesome 24 ffffff 0 png square 48 0\"\n");
             System.exit(0);
         }
     }
@@ -104,9 +97,8 @@ public class FontAwesome {
      *
      * @return the icon map
      */
-    private static Map<String, Character> initIcons(String args0) {
+    private static Map<String, Character> initIcons() {
         Map<String, Character> icons = new HashMap<>(1000);
-        List<String> ficons = Arrays.asList(args0.split(","));
         try {
             List<String> lines = Files.readAllLines(Paths.get("css/font-awesome.css"), StandardCharsets.UTF_8);
             Pattern pvalue = Pattern.compile("(?<=\\\\).*(?=\")"); // (?<=\).*(?=")
@@ -118,9 +110,7 @@ public class FontAwesome {
                     for (int j = i - 1; j >= 0; j--) { // Check previous lines for the keys to this unicode value
                         Matcher mkey = pkey.matcher(lines.get(j));
                         if (mkey.find()) {
-                             if (ficons.contains("all") || ficons.contains(mkey.group())) {
-                                icons.put(mkey.group(), value);
-                             }
+                            icons.put(mkey.group(), value);
                         } else {
                             break;
                         }
@@ -142,18 +132,15 @@ public class FontAwesome {
      * @param args  the command line arguments
      * @return      the FontAwesome properties
      */
-    private static FontAwesome initProperties(Font font, Map<String, Character> icons, String[] args) {
-        FontAwesome properties = new FontAwesome();
-//        properties.ficons = args.length > 0 ? Arrays.asList(args[0].split(",")) : null;
-        properties.fsize = args.length > 1 ? Integer.parseInt(args[1]) : 48;
-        properties.fcolor = args.length > 2 ? "transparent".equals(args[2]) ? new Color(0x0000000, true) : new Color(Integer.parseInt(args[2], 16)) : new Color(0);
-        properties.transparent = args.length > 2 && "transparent".equals(args[2]);
-        properties.padding = args.length > 3 && args[3].contains("/") ? Float.parseFloat(args[3].split("/")[0]) / Float.parseFloat(args[3].split("/")[1]) : 0;
-        properties.format = args.length > 4 ? args[4] : "png";
-        properties.bgcolor = args.length > 5 && properties.transparent ? new Color(Integer.parseInt(args[5], 16)) : null;
-        properties.sicon = args.length > 5  && !properties.transparent ? icons.get(args[5]).toString() : null;
-        properties.ssize = args.length > 6 ? Integer.parseInt(args[6]) : 0;
-        properties.scolor = args.length > 7 ? new Color(Integer.parseInt(args[7], 16)) : null;
+    private static FontAwesome4 initProperties(Font font, Map<String, Character> icons, String[] args) {
+        FontAwesome4 properties = new FontAwesome4();
+        properties.fsize = args.length > 0 ? Integer.parseInt(args[0]) : 48;
+        properties.fcolor = args.length > 1 ? new Color(Integer.parseInt(args[1], 16)) : new Color(0);
+        properties.padding = args.length > 2 && args[2].contains("/") ? Float.parseFloat(args[2].split("/")[0]) / Float.parseFloat(args[2].split("/")[1]) : 0;
+        properties.format = args.length > 3 ? args[3] : "png";
+        properties.sicon = args.length > 4 ? icons.get(args[4]).toString() : null;
+        properties.ssize = args.length > 5 ? Integer.parseInt(args[5]) : 0;
+        properties.scolor = args.length > 6 ? new Color(Integer.parseInt(args[6], 16)) : null;
         properties.size = properties.fsize > properties.ssize ? (int) properties.fsize : (int) properties.ssize;
         properties.ffont = font.deriveFont(properties.fsize - properties.fsize * properties.padding);
         properties.sfont = properties.sicon != null ? font.deriveFont(properties.ssize - properties.ssize * properties.padding) : null;
@@ -166,14 +153,14 @@ public class FontAwesome {
      * @param icons      the icon map
      * @param properties the FontAwesome properties
      */
-    private static void buildAndSaveImages(Map<String, Character> icons, FontAwesome properties) {
+    private static void buildAndSaveImages(Map<String, Character> icons, FontAwesome4 properties) {
         File images = new File("images");
         if (!images.exists()) { // Create the images folder if it doesn't already exit
             images.mkdir();
         }
         for (Map.Entry<String, Character> entry : icons.entrySet()) {
             saveImage(buildImage(properties.size, properties.sfont, properties.sicon, properties.scolor, properties.ffont,
-                                 entry.getValue().toString(), properties.fcolor, properties.transparent, properties.bgcolor), "images/" + entry.getKey(), properties.format);
+                                 entry.getValue().toString(), properties.fcolor), "images/" + entry.getKey(), properties.format);
         }
     }
 
@@ -187,24 +174,15 @@ public class FontAwesome {
      * @param ffont  the front font
      * @param ficon  the front icon unicode value
      * @param fcolor the front color
-     * @param transparent boolean indicating if transparent
-     * @param bgcolor     for transparency, the background color
      * @return       the BufferedImage containing the drawn icon graphic
      */
     private static BufferedImage buildImage(int size,
                                            Font sfont, String sicon, Color scolor,
-                                           Font ffont, String ficon, Color fcolor,
-                                           boolean transparent, Color bgcolor) {
+                                           Font ffont, String ficon, Color fcolor) {
         BufferedImage image = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
         Graphics2D graphics = image.createGraphics();
         graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON); // AA
-        // If transparent, set background color for transparent icons
-        if (transparent) {
-            graphics.setColor(bgcolor);
-            graphics.fillRect(0, 0, size, size);
-        }
-        // If stacked icon, then draw stacked icon first
-        if (sicon != null) {
+        if (sicon != null) { // Then draw stacked icon first
             graphics.setFont(sfont);
             graphics.setColor(scolor);
             Point spoint = calcDrawPoint(sfont, sicon, size, graphics);
@@ -212,9 +190,6 @@ public class FontAwesome {
         }
         graphics.setFont(ffont);
         graphics.setColor(fcolor);
-        if (transparent) {
-            graphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_IN, 1f));
-        }
         Point fpoint = calcDrawPoint(ffont, ficon, size, graphics);
         graphics.drawString(ficon, fpoint.x, fpoint.y);
         graphics.dispose();
