@@ -178,15 +178,26 @@ public class FontAwesome {
                 if (properties.icons.contains("all") || properties.icons.contains(entry.getKey())) {
                     Icon icon = new Icon();
                     icon.name = entry.getKey();
+                    // Iterate over the JSON value (only checking for the styles and unicode)
                     ScriptObjectMirror mirror2 = (ScriptObjectMirror) entry.getValue();
                     for (Map.Entry<String, Object> entry2 : mirror2.entrySet()) {
                         if ("styles".equals(entry2.getKey())) {
-                            icon.styles = Arrays.asList(entry2.getValue().toString().replace("[", "").replace("]", "").split(", "));
+                            icon.styles = new ArrayList<>(Arrays.asList(entry2.getValue().toString().replace("[", "").replace("]", "").split(", ")));
+                            if (!properties.styles.contains("all")) {
+                                for (String style : new ArrayList<>(icon.styles)) {
+                                    if (!properties.styles.contains(style)) {
+                                        icon.styles.remove(style);
+                                    }
+                                }
+                            }
                         } else if ("unicode".equals(entry2.getKey())) {
                             icon.unicode = (char) Integer.parseInt(entry2.getValue().toString(), 16);
                         }
                     }
-                    icons.add(icon);
+                    // Only add the icon if it had a matching style (non matching styles are removed in the previous for loop)
+                    if (!icon.styles.isEmpty()) {
+                        icons.add(icon);
+                    }
                 }
             }
         } catch (IOException | ScriptException e) {
