@@ -27,12 +27,12 @@ import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
 
 /**
- * {@code FontAwesome} converts Font Awesome icons to image files, such as in PNG or GIF format.
+ * {@code FontAwesome4} converts Font Awesome 4 icons to PNG image files.
  * <p/>
  * For usage and examples, see the accompanying README.MD file.
  *
  * @author  Roy Six
- * @version 1.0
+ * @version 4.7.0
  */
 public class FontAwesome4 {
 
@@ -70,14 +70,14 @@ public class FontAwesome4 {
     private static void validateArgs(String[] args) {
         if (args.length != 5 && args.length != 6 && args.length != 8) {
             System.out.print("\n\tFor regular icons, please enter 5 arguments:\n");
-            System.out.print("\tjava FontAwesome [icons] [size] [color] [padding] [format]\n");
-            System.out.print("\tex: \"java FontAwesome all 48 000000 1/8 png\"\n\n");
+            System.out.print("\tjava FontAwesome4 [icons] [size] [color] [padding] [format]\n");
+            System.out.print("\tex: \"java FontAwesome4 all 48 000000 1/8 png\"\n\n");
             System.out.print("\tFor transparent icons, please enter 6 arguments:\n");
-            System.out.print("\tjava FontAwesome [icons] [size] transparent [padding] [format] [bgcolor]\n");
-            System.out.print("\tex: \"java FontAwesome plus-circle,minus-circle 48 transparent 1/8 png 000000\"\n\n");
+            System.out.print("\tjava FontAwesome4 [icons] [size] transparent [padding] [format] [bgcolor]\n");
+            System.out.print("\tex: \"java FontAwesome4 plus-circle,minus-circle 48 transparent 1/8 png 000000\"\n\n");
             System.out.print("\tFor stacked icons, please enter 8 arguments:\n");
-            System.out.print("\tjava FontAwesome [icons] [size] [color] [padding] [format] [sicon] [ssize] [scolor]\n");
-            System.out.print("\tex: \"java FontAwesome all 24 ffffff 0 png square 48 000000\"\n");
+            System.out.print("\tjava FontAwesome4 [icons] [size] [color] [padding] [format] [sicon] [ssize] [scolor]\n");
+            System.out.print("\tex: \"java FontAwesome4 all 24 ffffff 0 png square 48 000000\"\n");
             System.exit(0);
         }
     }
@@ -135,12 +135,12 @@ public class FontAwesome4 {
     }
 
     /**
-     * Initializes the FontAwesome properties via the provided program arguments.
+     * Initializes the FontAwesome4 properties via the provided program arguments.
      *
      * @param font  the font
      * @param icons the icon map
      * @param args  the command line arguments
-     * @return      the FontAwesome properties
+     * @return      the FontAwesome4 properties
      */
     private static FontAwesome4 initProperties(Font font, Map<String, Character> icons, String[] args) {
         FontAwesome4 properties = new FontAwesome4();
@@ -161,10 +161,10 @@ public class FontAwesome4 {
     }
 
     /**
-     * Builds and saves all images in the icons map based on the FontAwesome properties in the images folder.
+     * Builds and saves all images in the icons map based on the FontAwesome4 properties in the images folder.
      *
      * @param icons      the icon map
-     * @param properties the FontAwesome properties
+     * @param properties the FontAwesome4 properties
      */
     private static void buildAndSaveImages(Map<String, Character> icons, FontAwesome4 properties) {
         File images = new File("images");
