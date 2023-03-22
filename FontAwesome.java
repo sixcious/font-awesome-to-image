@@ -1,4 +1,7 @@
-import jdk.nashorn.api.scripting.ScriptObjectMirror;
+/*
+ * Copyright (c) 2020 Roy Six
+ * Font Awesome by Dave Gandy - http://fontawesome.io
+ */
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
@@ -19,41 +22,40 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
 
 /**
- * {@code FontAwesome} converts Font Awesome 5 Free icons to PNG image files.
+ * {@code FontAwesome} converts Font Awesome Free icons to PNG image files. Compatible with Font Awesome 5 and 6.
  * <p/>
  * For usage and examples, see the accompanying README.MD file.
  * <p/>
  * Font Awesome is by Dave Gandy - https://fontawesome.com
  *
  * @author  Roy Six
- * @version 5.2.0
+ * @version 6.0
  */
 public class FontAwesome {
 
     private static final String ICONS_JSON_PATH = "metadata/icons.json";
-    private static final String BRANDS_FONT_PATH = "otfs/Font Awesome 5 Brands-Regular-400.otf";
-    private static final String REGULAR_FONT_PATH = "otfs/Font Awesome 5 Free-Regular-400.otf";
-    private static final String SOLID_FONT_PATH = "otfs/Font Awesome 5 Free-Solid-900.otf";
+    private static final String BRANDS_FONT_PATH = "otfs/Font Awesome 6 Brands-Regular-400.otf";
+    private static final String REGULAR_FONT_PATH = "otfs/Font Awesome 6 Free-Regular-400.otf";
+    private static final String SOLID_FONT_PATH = "otfs/Font Awesome 6 Free-Solid-900.otf";
 
     private static class Properties {
-        // Front variables:
+        // Front properties:
         List<String> icons;
         List<String> styles;
         int size;
         Color color;
         float padding;
-        // Stacked variables:
+        // Stacked properties:
         String sicon;
         String sstyle;
         float ssize;
         Color scolor;
-        // Transparent variables:
+        // Transparent properties:
         boolean transparent;
         Color bgcolor;
     }
@@ -161,50 +163,61 @@ public class FontAwesome {
     }
 
     /**
-     * TODO
+     * Initializes the {@link Icon}s by parsing the icons json file.
      *
-     * @param properties
-     * @return
+     * @param properties the properties containing the size and padding
+     * @return the icons
      */
     private static List<Icon> initIcons(Properties properties) {
         List<Icon> icons = new ArrayList<>();
-        ScriptEngine engine = new ScriptEngineManager().getEngineByName("javascript");
         try {
             byte[] encoded = Files.readAllBytes(Paths.get(ICONS_JSON_PATH));
             String json = new String(encoded);
-            String script = "Java.asJSONCompatible(" + json + ")";
-            ScriptObjectMirror mirror = (ScriptObjectMirror) engine.eval(script);
-            for (Map.Entry<String, Object> entry : mirror.entrySet()) {
-                if (properties.icons.contains("all") || properties.icons.contains(entry.getKey())) {
+            List<String> names = parseJSON(json, "name");
+            List<String> styles = parseJSON(json, "styles");
+            List<String> unicodes = parseJSON(json, "unicode");
+            for (int i = 0; i < names.size(); i++) {
+                String name = names.get(i);
+                String style = styles.get(i);
+                String unicode = unicodes.get(i);
+                if (properties.icons.contains("all") || properties.icons.contains(name)) {
                     Icon icon = new Icon();
-                    icon.name = entry.getKey();
-                    // Iterate over the JSON value (only checking for the styles and unicode)
-                    ScriptObjectMirror mirror2 = (ScriptObjectMirror) entry.getValue();
-                    for (Map.Entry<String, Object> entry2 : mirror2.entrySet()) {
-                        if ("styles".equals(entry2.getKey())) {
-                            icon.styles = new ArrayList<>(Arrays.asList(entry2.getValue().toString().replace("[", "").replace("]", "").split(", ")));
-                            if (!properties.styles.contains("all")) {
-                                for (String style : new ArrayList<>(icon.styles)) {
-                                    if (!properties.styles.contains(style)) {
-                                        icon.styles.remove(style);
-                                    }
-                                }
-                            }
-                        } else if ("unicode".equals(entry2.getKey())) {
-                            icon.unicode = (char) Integer.parseInt(entry2.getValue().toString(), 16);
-                        }
-                    }
-                    // Only add the icon if it had a matching style (non matching styles are removed in the previous for loop)
-                    if (!icon.styles.isEmpty()) {
-                        icons.add(icon);
-                    }
+                    icon.name = name;
+                    icon.styles = Arrays.asList(style.replaceAll("\"|\n|\s", "").split(","));
+                    icon.unicode = (char) Integer.parseInt(unicode, 16);
+                    icons.add(icon);
                 }
             }
-        } catch (IOException | ScriptException e) {
+        } catch (IOException e) {
             System.err.print(e.getMessage() + "\n");
             System.exit(1);
         }
         return icons;
+    }
+
+    /**
+     * Parses the JSON file as a string to extract the icon names, styles, and unicode values.
+     *
+     * @param json the icons json file as a string
+     * @param parse the specific
+     * @return the list of all matches from the regular expression
+     */
+    private static List<String> parseJSON(String json, String parse) {
+        List<String> list = new ArrayList<>();
+        String regex =
+            "name".equals(parse) ? "  \"(.*)\": \\{" :
+            "styles".equals(parse) ? "\"styles\": \\[([\\s\\S]*?)]" :
+            "unicode".equals(parse) ? "\"unicode\": \"(.*)\"" :
+            "";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(json);
+        while (matcher.find()) {
+            String match = matcher.group(1);
+            if (!Arrays.asList("aliases", "search", "svg", "brands", "unicodes", "solid", "regular").contains(match)) {
+                list.add(match);
+            }
+        }
+        return list;
     }
 
     /**
