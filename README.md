@@ -3,7 +3,7 @@
 
 Generates Font Awesome icon images in Java. Tested to work with Font Awesome 6 to generate over 1K+ images (including aliases).
 
-This is a simple Java command-line program that generates high quality image files (like png or gif) using the insanely *awesome* [Font Awesome](http://fontawesome.io) icon library.
+This is a simple Java command-line program that generates high quality image files (like png or gif) using the insanely *awesome* [Font Awesome](https://fontawesome.com) icon library.
 If you don't have Java, you can download it from the [OpenJDK](https://jdk.java.net/) website.
 
 ## Set Up
