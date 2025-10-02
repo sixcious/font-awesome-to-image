@@ -57,4 +57,4 @@ MIT
 
 ## Copyright
 Font Awesome To Image  
-Copyright © 2020 Roy Six
+Copyright © 2020 Six

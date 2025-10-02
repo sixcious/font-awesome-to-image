@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Roy Six
+ * Copyright (c) 2020 Six
  * Font Awesome by Dave Gandy - http://fontawesome.io
  */
 
@@ -33,7 +33,7 @@ import javax.imageio.ImageIO;
  * <p/>
  * Font Awesome is by Dave Gandy - https://fontawesome.com
  *
- * @author  Roy Six
+ * @author  Six
  * @version 6.0
  */
 public class FontAwesome {
